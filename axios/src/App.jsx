@@ -13,6 +13,12 @@ const App = () => {
       })
   }, [situation])
   console.log(api);
+  function deleteIteam(parametr) {
+  axios.delete(`${url}/${parametr}`)
+  .then(() =>{
+    setApi(info =>(info.filter((value) => value.id != parametr)))
+  })
+  }
   return (
     <div>
       <table border={2} cellPadding={10}>
@@ -27,20 +33,20 @@ const App = () => {
         </thead>
         <tbody>
           {
-            api.map((value) => {
+            api.map((value , index) => {
               return (
                 <tr key={value.id}>
-                  <td>{value.id}</td>
+                  <td>{index+1}</td>
                   <td>{value.name}</td>
                   <td>{value.year}</td>
-                  <td><button>delete</button></td>
+                  <td><button onClick={deleteIteam()}>delete</button></td>
                   <td>
                     {
                       value.id == condition ? (
                         <button onClick={save}>save</button>
                       ) :
                         (
-                          <button onClick={() => editIteam(value)}>edit</button>
+                          <button onClick={() => editIteam(value.id)}>edit</button>
                         )
                     }
                   </td>
